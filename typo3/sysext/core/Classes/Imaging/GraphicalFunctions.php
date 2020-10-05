@@ -2145,6 +2145,8 @@ class GraphicalFunctions
         $command = $this->scalecmd . ' ' . $info[0] . 'x' . $info[1] . '! ' . $params . ' ';
         // re-apply colorspace-setting for the resulting image so colors don't appear to dark (sRGB instead of RGB)
         $command .= ' -colorspace ' . $this->colorspace;
+        // Add -sharpen for crisp images on convert
+        $command .= ' -sharpen 0x1 ';
         $cropscale = $data['crs'] ? 'crs-V' . $data['cropV'] . 'H' . $data['cropH'] : '';
         if ($this->alternativeOutputKey) {
             $theOutputName = GeneralUtility::shortMD5($command . $cropscale . PathUtility::basename($imagefile) . $this->alternativeOutputKey . '[' . $frame . ']');
