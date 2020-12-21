@@ -468,6 +468,9 @@ class FormFileExtensionUpdate implements ChattyInterface, UpgradeWizardInterface
                 continue;
             }
             $flexform = GeneralUtility::xml2array($pluginData['pi_flexform']);
+            if (!is_array($flexform)) {
+                continue;
+            }
             $referencedPersistenceIdentifier = $this->getPersistenceIdentifierFromFlexform($flexform);
             $referenceHasNewFileExtension = $this->hasNewFileExtension($referencedPersistenceIdentifier);
             $possibleOldReferencedPersistenceIdentifier = $this->getOldPersistenceIdentifier($referencedPersistenceIdentifier);
