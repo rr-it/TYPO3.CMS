@@ -142,6 +142,12 @@ class MvcPropertyMappingConfigurationService implements SingletonInterface
             throw new BadRequestException('The HMAC of the form could not be validated.', 1581862822);
         }
         $trustedProperties = json_decode($serializedTrustedProperties, true);
+        if($trustedProperties === null) {
+            throw new BadRequestException('The JSON data of the form could not be decoded.', 1662044982);
+        }
+        if (!is_array($trustedProperties)) {
+            return;
+        }
         foreach ($trustedProperties as $propertyName => $propertyConfiguration) {
             if (!$controllerArguments->hasArgument($propertyName)) {
                 continue;
