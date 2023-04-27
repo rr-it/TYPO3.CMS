@@ -128,7 +128,7 @@ class LoginController extends AbstractLoginFormController
             $this->redirectUrl = $this->redirectHandler->processRedirect(
                 $this->loginType,
                 $this->configuration,
-                $this->request->hasArgument('redirectReferrer') ? $this->request->getArgument('redirectReferrer') : ''
+                (string)$this->requestHandler->getPropertyFromGetAndPost('redirectReferrer')
             );
         }
     }
@@ -156,7 +156,7 @@ class LoginController extends AbstractLoginFormController
                 'storagePid' => $this->shallEnforceLoginSigning() ? $this->getSignedStorageFolders() : implode(',', $this->getStorageFolders()),
                 'permaloginStatus' => $this->getPermaloginStatus(),
                 'redirectURL' => $this->redirectHandler->getLoginFormRedirectUrl($this->configuration, $this->isRedirectDisabled()),
-                'redirectReferrer' => $this->request->hasArgument('redirectReferrer') ? (string)$this->request->getArgument('redirectReferrer'): '',
+                'redirectReferrer' => (string)$this->requestHandler->getPropertyFromGetAndPost('redirectReferrer'),
                 'referer' => $this->requestHandler->getPropertyFromGetAndPost('referer'),
                 'noRedirect' => $this->isRedirectDisabled(),
             ]
