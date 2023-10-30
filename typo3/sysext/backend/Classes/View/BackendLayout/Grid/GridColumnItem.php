@@ -300,7 +300,9 @@ class GridColumnItem extends AbstractGridObject
     public function isVisibilityToggling(): bool
     {
         $hiddenField = $GLOBALS['TCA']['tt_content']['ctrl']['enablecolumns']['disabled'];
+        $isL10nOverlay = (int)($this->record[$GLOBALS['TCA']['tt_content']['ctrl']['transOrigPointerField'] ?? null] ?? 0) !== 0;
         return $hiddenField && $GLOBALS['TCA']['tt_content']['columns'][$hiddenField]
+            && !($isL10nOverlay && $GLOBALS['TCA']['tt_content']['columns'][$hiddenField]['l10n_mode'] === 'exclude')
             && (
                 !($GLOBALS['TCA']['tt_content']['columns'][$hiddenField]['exclude'] ?? false)
                 || $this->getBackendUser()->check('non_exclude_fields', 'tt_content:' . $hiddenField)
