@@ -186,6 +186,22 @@ class ContentFetcher
             }
             $languageTranslationInfo['untranslatedRecordUids'] = array_keys($untranslatedRecordUids);
 
+            // Take account of localization config from Page TSconfig if suitable
+            $pageId = $this->context->getPageId();
+            $pageTSconfigL10n = BackendUtility::getPagesTSconfig($pageId)['mod.']['web_layout.']['localization.'] ?? [];
+            $isL10nCopyEnabled = (bool)($pageTSconfigL10n['enableCopy'] ?? false);
+            $isL10nTranslateEnabled = (bool)($pageTSconfigL10n['enableTranslate'] ?? false);
+            if ($isL10nCopyEnabled && !$isL10nTranslateEnabled) {
+                // Only "copy" is enabled.
+                $languageTranslationInfo['hasStandAloneContent'] = true;
+                $languageTranslationInfo['mode'] = 'free';
+            }
+            if (!$isL10nCopyEnabled && $isL10nTranslateEnabled) {
+                // Only "translate" is enabled.
+                $languageTranslationInfo['hasTranslations'] = true;
+                $languageTranslationInfo['mode'] = 'connected';
+            }
+
             // Check for inconsistent translations, force "mixed" mode and dispatch a FlashMessage to user if such a case is encountered.
             if (isset($languageTranslationInfo['hasStandAloneContent'])
                 && $languageTranslationInfo['hasTranslations']
