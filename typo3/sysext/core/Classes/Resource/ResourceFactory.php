@@ -307,7 +307,7 @@ class ResourceFactory implements SingletonInterface
                     $relativePath = PathUtility::getRelativePath(Environment::getPublicPath() . '/', PathUtility::dirname($absoluteFilePath)) . PathUtility::basename($absoluteFilePath);
                 } else {
                     try {
-                        $relativePath = PathUtility::getPublicResourceWebPath($input);
+                        $relativePath = PathUtility::getPublicResourceWebPath($input, false);
                     } catch (\Throwable $e) {
                         throw new ResourceDoesNotExistException(sprintf('Tried to access a private resource file "%s" from fallback compatibility storage. This storage only handles public files.', $input), 1633777536);
                     }
