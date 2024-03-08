@@ -4465,6 +4465,7 @@ html{scroll-behavior:smooth}
 .element-preview-content>:first-child{margin-top:0}
 .element-preview-content>:last-child{margin-bottom:0}
 .element-preview-content .preview-thumbnails{margin-top:.5rem}
+.element-preview-content>a{padding-top:calc(.5lh - .5em);padding-bottom:calc(.5lh - .5em)}
 :root{--preview-thumbnails-size:64px}
 .preview-thumbnails{display:flex;flex-wrap:wrap;gap:.5rem}
 .preview-thumbnails-element{display:block}
