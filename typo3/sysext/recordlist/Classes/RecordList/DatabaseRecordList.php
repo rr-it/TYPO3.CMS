@@ -1582,7 +1582,8 @@ class DatabaseRecordList
                 && !empty($GLOBALS['TCA'][$table]['columns'][$hiddenField])
                 && (empty($GLOBALS['TCA'][$table]['columns'][$hiddenField]['exclude']) || $backendUser->check('non_exclude_fields', $table . ':' . $hiddenField))
             ) {
-                if (!$permsEdit || $isDeletePlaceHolder || $this->isRecordCurrentBackendUser($table, $row)) {
+                $isExcludedByL10nMode = ($isL10nOverlay && $GLOBALS['TCA'][$table]['columns'][$hiddenField]['l10n_mode'] === 'exclude');
+                if (!$permsEdit || $isDeletePlaceHolder || $isExcludedByL10nMode || $this->isRecordCurrentBackendUser($table, $row)) {
                     $hideAction = $this->spaceIcon;
                 } else {
                     $hideTitle = htmlspecialchars($this->getLanguageService()->getLL('hide' . ($table === 'pages' ? 'Page' : '')));
