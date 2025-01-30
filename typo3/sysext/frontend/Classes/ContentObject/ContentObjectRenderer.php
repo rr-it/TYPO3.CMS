@@ -5417,6 +5417,11 @@ class ContentObjectRenderer implements LoggerAwareInterface
             'orderBy' => null,
         ];
 
+        // pid_uid constraint is completely disabled on purpose
+        if (($conf['pidInList'] ?? null) === '0' && ($conf['uidInList'] ?? null) === '0') {
+            $pid_uid_flag++;
+        }
+
         $isInWorkspace = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('workspace', 'isOffline');
         $considerMovePointers = (
             $isInWorkspace && $table !== 'pages'
