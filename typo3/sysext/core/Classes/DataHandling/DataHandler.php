@@ -4461,7 +4461,7 @@ class DataHandler implements LoggerAwareInterface
         // Finding out, if the record may be moved from where it is. If the record is a non-page, then it depends on edit-permissions.
         // If the record is a page, then there are two options: If the page is moved within itself,
         // (same pid) it's edit-perms of the pid. If moved to another place then its both delete-perms of the pid and new-page perms on the destination.
-        if ($table !== 'pages' || $resolvedPid == $moveRec['pid']) {
+        if ($table !== 'pages' || $resolvedPid == $moveRec['pid'] || $this->BE_USER->workspace > 0) {
             // Edit rights for the record...
             $mayMoveAccess = $this->checkRecordUpdateAccess($table, $uid);
         } else {
@@ -4469,7 +4469,7 @@ class DataHandler implements LoggerAwareInterface
         }
         // Finding out, if the record may be moved TO another place. Here we check insert-rights (non-pages = edit, pages = new),
         // unless the pages are moved on the same pid, then edit-rights are checked
-        if ($table !== 'pages' || $resolvedPid != $moveRec['pid']) {
+        if ($table !== 'pages' || ($resolvedPid != $moveRec['pid'] && $this->BE_USER->workspace <= 0)) {
             // Insert rights for the record...
             $mayInsertAccess = $this->checkRecordInsertAccess($table, $resolvedPid, SystemLogDatabaseAction::MOVE);
         } else {
