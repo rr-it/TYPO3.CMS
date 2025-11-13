@@ -94,6 +94,7 @@ class LocalCropScaleMaskHelper
             $gifBuilder->filenamePrefix = 'crop_';
 
             $jpegQuality = MathUtility::forceIntegerInRange($GLOBALS['TYPO3_CONF_VARS']['GFX']['jpg_quality'], 10, 100, 85);
+            $transparentBgFix = $configuration['fileExtension'] === 'jpg' ? ' -background white -flatten' : '';
 
             // the result info is an array with 0=width,1=height,2=extension,3=filename
             $result = $gifBuilder->imageMagickConvert(
@@ -101,7 +102,7 @@ class LocalCropScaleMaskHelper
                 $configuration['fileExtension'],
                 '',
                 '',
-                sprintf('-crop %dx%d+%d+%d +repage -quality %d', $newWidth, $newHeight, $offsetLeft, $offsetTop, $jpegQuality),
+                sprintf('-crop %dx%d+%d+%d%s +repage -quality %d', $newWidth, $newHeight, $offsetLeft, $offsetTop, $transparentBgFix, $jpegQuality),
                 '',
                 ['noScale' => true],
                 true
