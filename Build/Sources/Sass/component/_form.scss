@@ -85,6 +85,7 @@
 // SelectIcons FieldWizard
 //
 .form-wizard-icon-list {
+    @include lightmode;
     color: var(--typo3-component-color);
     background: var(--typo3-component-bg);
     border: var(--typo3-component-border-width) solid var(--typo3-component-border-color);
